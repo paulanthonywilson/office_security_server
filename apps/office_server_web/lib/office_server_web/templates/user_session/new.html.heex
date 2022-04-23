@@ -1,4 +1,8 @@
-<h1>Log in</h1>
+<div class="rounded-t mb-0 px-6 py-6">
+<div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+<div class="text-gray-500 text-center mb-3 font-bold">
+  <h1>Log in</h1>
+</div>
 
 <.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
   <%= if @error_message do %>
@@ -25,3 +29,5 @@
   <%= link "Register", to: Routes.user_registration_path(@conn, :new) %> |
   <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
 </p>
+</div>
+</div>
