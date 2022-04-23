@@ -53,7 +53,7 @@ defmodule OfficeServerWeb.MixProject do
       {:tailwind, "~> 0.1.5"},
 
       # umbrella
-      {:office_server, in_umbrella: true},
+      {:office_server, in_umbrella: true}
     ]
   end
 
@@ -64,7 +64,7 @@ defmodule OfficeServerWeb.MixProject do
     [
       setup: ["deps.get"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
   end
 end
