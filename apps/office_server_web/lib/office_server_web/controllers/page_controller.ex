@@ -2,6 +2,6 @@ defmodule OfficeServerWeb.PageController do
   use OfficeServerWeb, :controller
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    text(conn, "hi")
   end
 end
