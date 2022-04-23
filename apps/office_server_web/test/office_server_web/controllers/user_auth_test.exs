@@ -161,10 +161,23 @@ defmodule OfficeServerWeb.UserAuthTest do
       refute get_session(halted_conn, :user_return_to)
     end
 
-    test "does not redirect if user is authenticated", %{conn: conn, user: user} do
+    test "does not redirect if confirmed user is authenticated", %{conn: conn, user: user} do
       conn = conn |> assign(:current_user, user) |> UserAuth.require_authenticated_user([])
       refute conn.halted
       refute conn.status
+    end
+
+    test "redirects if not confirmed", %{conn: conn} do
+      user = unconfirmed_user_fixture()
+
+      conn =
+        conn
+        |> fetch_flash()
+        |> assign(:current_user, user)
+        |> UserAuth.require_authenticated_user([])
+
+      assert conn.halted
+      assert redirected_to(conn) == Routes.user_confirmation_path(conn, :new)
     end
   end
 end

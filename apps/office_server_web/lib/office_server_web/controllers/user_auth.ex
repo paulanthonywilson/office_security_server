@@ -128,8 +128,10 @@ defmodule OfficeServerWeb.UserAuth do
   they use the application at all, here would be a good place.
   """
   def require_authenticated_user(conn, _opts) do
-    if conn.assigns[:current_user] do
-      conn
+    user = conn.assigns[:current_user]
+
+    if user do
+      check_confirmation(conn, user)
     else
       conn
       |> put_flash(:error, "You must log in to access this page.")
@@ -138,6 +140,15 @@ defmodule OfficeServerWeb.UserAuth do
       |> halt()
     end
   end
+
+  defp check_confirmation(conn, %{confirmed_at: nil} = u) do
+    conn
+    |> put_flash(:error, "You need to confirm your email.")
+    |> redirect(to: Routes.user_confirmation_path(conn, :new))
+    |> halt()
+  end
+
+  defp check_confirmation(conn, _), do: conn
 
   defp maybe_store_return_to(%{method: "GET"} = conn) do
     put_session(conn, :user_return_to, current_path(conn))
