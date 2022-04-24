@@ -3,6 +3,7 @@ defmodule OfficeServer.AccountsFixtures do
   This module defines test helpers for creating
   entities via the `OfficeServer.Accounts` context.
   """
+  alias Ecto.Changeset
   alias OfficeServer.Accounts.User
   alias OfficeServer.Repo
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
@@ -33,6 +34,12 @@ defmodule OfficeServer.AccountsFixtures do
   def confirm(user) do
     user
     |> User.confirm_changeset()
+    |> Repo.update!()
+  end
+
+  def confirm_user_at(user, confirm_at) do
+    user
+    |> Changeset.change(confirmed_at: confirm_at)
     |> Repo.update!()
   end
 

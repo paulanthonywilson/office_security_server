@@ -1,3 +1,3 @@
 defmodule OfficeServerWeb.UserSessionView do
-  use OfficeServerWeb, :view
+  use OfficeServerWeb.AuthCommonView
 end

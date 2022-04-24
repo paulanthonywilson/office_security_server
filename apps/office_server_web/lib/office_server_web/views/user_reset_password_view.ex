@@ -1,3 +1,3 @@
 defmodule OfficeServerWeb.UserResetPasswordView do
-  use OfficeServerWeb, :view
+  use OfficeServerWeb.AuthCommonView
 end

@@ -1,33 +1,28 @@
-<div class="rounded-t mb-0 px-6 py-6">
-<div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-<div class="text-gray-500 text-center mb-3 font-bold">
-  <h1>Log in</h1>
-</div>
-
-<.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
-  <%= if @error_message do %>
-    <div class="alert alert-danger">
-      <p><%= @error_message %></p>
-    </div>
+<%= form_box "Log in", fn -> %>
+ <.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
+   <%= if @error_message do %>
+     <div class="alert alert-danger">
+       <p><%= @error_message %></p>
+     </div>
+   <% end %>
+  <%=  field fn -> %>
+     <%= label f, :email, class: label_class() %>
+     <%= email_input f, :email, required: true, class: field_class() %>
   <% end %>
+  <%=  field fn -> %>
+     <%= label f, :password, class: label_class() %>
+     <%= password_input f, :password, required: true, class: field_class() %>
+  <% end %>
+   <div>
+       <%= label f, :remember_me, "Keep me logged in for 60 days", class: checkbox_label() %>
+       <%= checkbox f, :remember_me, class: checkbox_class() %>
+   </div>
+   <div class="text-center mt-6">
+     <%= submit "Log in", class: submit_class() %>
+   </div>
+ </.form>
+<%= bottom_links(link("Register", to: Routes.user_registration_path(@conn, :new)),
+                 link("Forgot your password?", to: Routes.user_reset_password_path(@conn, :new))) %>
 
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
 
-  <%= label f, :password %>
-  <%= password_input f, :password, required: true %>
-
-  <%= label f, :remember_me, "Keep me logged in for 60 days" %>
-  <%= checkbox f, :remember_me %>
-
-  <div>
-    <%= submit "Log in" %>
-  </div>
-</.form>
-
-<p>
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
-</p>
-</div>
-</div>
+<% end %>

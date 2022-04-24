@@ -6,7 +6,7 @@ defmodule OfficeServerWeb.UserConfirmationControllerTest do
   import OfficeServer.AccountsFixtures
 
   setup do
-    %{user: user_fixture()}
+    %{user: unconfirmed_user_fixture()}
   end
 
   describe "GET /users/confirm" do

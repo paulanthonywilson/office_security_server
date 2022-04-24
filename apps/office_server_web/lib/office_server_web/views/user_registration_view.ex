@@ -1,3 +1,3 @@
 defmodule OfficeServerWeb.UserRegistrationView do
-  use OfficeServerWeb, :view
+  use OfficeServerWeb.AuthCommonView
 end

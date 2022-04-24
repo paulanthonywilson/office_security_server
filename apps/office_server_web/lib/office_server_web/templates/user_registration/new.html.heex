@@ -1,5 +1,4 @@
-<h1>Register</h1>
-
+<%= form_box "Register", fn -> %>
 <.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)}>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -7,20 +6,26 @@
     </div>
   <% end %>
 
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
-  <%= error_tag f, :email %>
+  <%= field fn -> %>
 
-  <%= label f, :password %>
-  <%= password_input f, :password, required: true %>
+  <%= label f, :email, class: label_class() %>
+  <%= email_input f, :email, required: true, class: field_class() %>
+  <%= error_tag f, :email %>
+  <% end %>
+
+  <%= field fn -> %>
+  <%= label f, :password, class: label_class() %>
+  <%= password_input f, :password, required: true, class: field_class() %>
   <%= error_tag f, :password %>
+  <% end %>
 
   <div>
-    <%= submit "Register" %>
+    <%= submit "Register", class: submit_class() %>
   </div>
 </.form>
 
-<p>
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
-</p>
+<%= bottom_links(link("Log in", to: Routes.user_session_path(@conn, :new)),
+                 link("Forgot your password?", to: Routes.user_reset_password_path(@conn, :new))) %>
+
+
+<% end %>
