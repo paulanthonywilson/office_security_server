@@ -1,8 +1,10 @@
-<main class="absolute w-full h-full">
-<section class="absolute w-full h-full">
-<div class="absolute top-0 w-full h-full bg-gray-900"> </div>
-  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-  <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-        <%= @inner_content %>
-</section>
-</main>
+<body class="text-gray-800 antialiased">
+  <main class="absolute w-full h-full">
+  <section class="absolute w-full h-full">
+  <div class="absolute top-0 w-full h-full bg-gray-900"> </div>
+    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+          <%= @inner_content %>
+  </section>
+  </main>
+</body>
