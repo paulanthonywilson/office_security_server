@@ -1,18 +1,20 @@
-<%= form_box "Forgot your password?", fn -> %>
+<.form_box title="Forgot your password?">
 
 <.form let={f} for={:user} action={Routes.user_reset_password_path(@conn, :create)}>
-  <%= field fn -> %>
+  <.field>
     <%= label f, :email, class: label_class() %>
     <%= email_input f, :email, required: true, class: field_class() %>
-  <% end %>
+  </.field>
 
   <div>
     <%= submit "Email reset instructions", class: submit_class() %>
   </div>
 </.form>
 
+<.bottom_links>
+  <:l1><%= link("Register", to: Routes.user_registration_path(@conn, :new)) %></:l1>
+  <:l2><%= link("Log in", to: Routes.user_session_path(@conn, :new)) %></:l2>
+</.bottom_links>
 
-<%= bottom_links(link("Register", to: Routes.user_registration_path(@conn, :new)),
-                 link("Log in", to: Routes.user_session_path(@conn, :new))) %>
 
-<% end %>
+</.form_box>

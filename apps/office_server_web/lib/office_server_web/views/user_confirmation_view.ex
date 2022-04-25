@@ -1,3 +1,4 @@
 defmodule OfficeServerWeb.UserConfirmationView do
-  use OfficeServerWeb.AuthCommonView
+  use OfficeServerWeb, :view
+  import OfficeServerWeb.AuthCommon
 end

@@ -1,18 +1,18 @@
-<%= form_box "Log in", fn -> %>
+<.form_box title="Log in">
  <.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
    <%= if @error_message do %>
      <div class="alert alert-danger">
        <p><%= @error_message %></p>
      </div>
    <% end %>
-  <%=  field fn -> %>
+  <.field>
      <%= label f, :email, class: label_class() %>
      <%= email_input f, :email, required: true, class: field_class() %>
-  <% end %>
-  <%=  field fn -> %>
+  </.field>
+  <.field>
      <%= label f, :password, class: label_class() %>
      <%= password_input f, :password, required: true, class: field_class() %>
-  <% end %>
+   </.field>
    <div>
        <%= label f, :remember_me, "Keep me logged in for 60 days", class: checkbox_label() %>
        <%= checkbox f, :remember_me, class: checkbox_class() %>
@@ -21,8 +21,9 @@
      <%= submit "Log in", class: submit_class() %>
    </div>
  </.form>
-<%= bottom_links(link("Register", to: Routes.user_registration_path(@conn, :new)),
-                 link("Forgot your password?", to: Routes.user_reset_password_path(@conn, :new))) %>
 
-
-<% end %>
+<.bottom_links>
+  <:l1><%= link("Register", to: Routes.user_registration_path(@conn, :new)) %></:l1>
+  <:l2><%= link("Forgot your password", to: Routes.user_reset_password_path(@conn, :new)) %></:l2>
+</.bottom_links>
+</.form_box>
