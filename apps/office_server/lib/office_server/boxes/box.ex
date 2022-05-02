@@ -1,6 +1,9 @@
 defmodule OfficeServer.Boxes.Box do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
+
+  @type t :: %__MODULE__{}
 
   schema "boxes" do
     field :board_id, :string

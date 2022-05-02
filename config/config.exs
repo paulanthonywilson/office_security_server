@@ -65,6 +65,14 @@ config :tailwind,
     cd: Path.expand("../apps/office_server_web/assets", __DIR__)
   ]
 
+if Mix.env() in [:test, :dev] do
+  config :office_server, OfficeServer.Tokens,
+    box: [
+      secret: "O+ZouwjCKMMuKpEZqUcbS2oGv8sF0yb4IJOPzWPXO0SXtl8f9+wnlmePUMIriiWM",
+      salt: "8XYbBElUVi5HQu3yuvB2w/KMruFnTRGizWfsL5li/edqWMnk8+fycKY+bKkM/Zy2"
+    ]
+end
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

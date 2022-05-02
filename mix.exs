@@ -24,7 +24,9 @@ defmodule OfficeServer.Umbrella.MixProject do
   # Dependencies listed here are available only for this project
   # and cannot be accessed from applications inside the apps/ folder.
   defp deps do
-    []
+    [
+      {:credo, "~> 1.6", only: :dev}
+    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

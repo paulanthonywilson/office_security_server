@@ -23,7 +23,7 @@ defmodule OfficeServer.MixProject do
   def application do
     [
       mod: {OfficeServer.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :plug_crypto]
     ]
   end
 
@@ -41,6 +41,7 @@ defmodule OfficeServer.MixProject do
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.2"},
+      {:plug_crypto, "~> 1.2"},
       {:swoosh, "~> 1.3"}
     ]
   end

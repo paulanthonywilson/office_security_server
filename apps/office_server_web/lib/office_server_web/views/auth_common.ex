@@ -1,4 +1,5 @@
 defmodule OfficeServerWeb.AuthCommon do
+  @moduledoc false
   use Phoenix.Component
   use Phoenix.HTML
 

@@ -1,4 +1,5 @@
 defmodule OfficeServer.Accounts.UserNotifier do
+  @moduledoc false
   import Swoosh.Email
 
   alias OfficeServer.Mailer
