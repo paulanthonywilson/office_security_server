@@ -89,4 +89,9 @@ defmodule OfficeServerWeb.Router do
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
   end
+
+  scope "/box", OfficeServerWeb do
+    pipe_through [:api]
+    post "/register", BoxRegistrationController, :register
+  end
 end
