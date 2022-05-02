@@ -6,99 +6,31 @@ defmodule OfficeServer.Boxes do
   import Ecto.Query, warn: false
   alias OfficeServer.Repo
 
+  alias OfficeServer.Accounts
   alias OfficeServer.Boxes.Box
 
-  @doc """
-  Returns the list of boxes.
-
-  ## Examples
-
-      iex> list_boxes()
-      [%Box{}, ...]
-
-  """
-  def list_boxes do
-    Repo.all(Box)
+  def register(owner_email, owner_password, board_id, name) do
+    with {:ok, owner_id} <- get_authenticated_user_id(owner_email, owner_password),
+         {:ok, %Box{}} <- create_box(owner_id, board_id, name) do
+      {:ok, "a token"}
+    end
   end
 
-  @doc """
-  Gets a single box.
 
-  Raises `Ecto.NoResultsError` if the Box does not exist.
+  defp get_authenticated_user_id(email, password) do
+    case  Accounts.get_user_by_email_and_password(email, password) do
+      %{id: id} -> {:ok, id}
+      _ -> {:error, :authentication}
+    end
+  end
 
-  ## Examples
-
-      iex> get_box!(123)
-      %Box{}
-
-      iex> get_box!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_box!(id), do: Repo.get!(Box, id)
-
-  @doc """
-  Creates a box.
-
-  ## Examples
-
-      iex> create_box(%{field: value})
-      {:ok, %Box{}}
-
-      iex> create_box(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_box(attrs \\ %{}) do
-    %Box{}
-    |> Box.changeset(attrs)
+  defp create_box(owner_id, board_id, name) do
+    %Box{owner_id: owner_id}
+    |> Box.changeset(%{name: name, board_id: board_id})
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a box.
-
-  ## Examples
-
-      iex> update_box(box, %{field: new_value})
-      {:ok, %Box{}}
-
-      iex> update_box(box, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_box(%Box{} = box, attrs) do
-    box
-    |> Box.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a box.
-
-  ## Examples
-
-      iex> delete_box(box)
-      {:ok, %Box{}}
-
-      iex> delete_box(box)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_box(%Box{} = box) do
-    Repo.delete(box)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking box changes.
-
-  ## Examples
-
-      iex> change_box(box)
-      %Ecto.Changeset{data: %Box{}}
-
-  """
-  def change_box(%Box{} = box, attrs \\ %{}) do
-    Box.changeset(box, attrs)
+  def boxes_owned_by(user_id) do
+    Repo.all(from b in Box, where: b.owner_id == ^user_id)
   end
 end
