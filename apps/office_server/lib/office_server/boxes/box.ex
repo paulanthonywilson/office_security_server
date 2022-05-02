@@ -18,5 +18,6 @@ defmodule OfficeServer.Boxes.Box do
     box
     |> cast(attrs, [:board_id, :name])
     |> validate_required([:board_id, :name])
+    |> unique_constraint(:board_id, name: :boxes_owner_id_board_id_index)
   end
 end

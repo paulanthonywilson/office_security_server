@@ -29,6 +29,27 @@ defmodule OfficeServer.Boxes do
     %Box{owner_id: owner_id}
     |> Box.changeset(%{name: name, board_id: board_id})
     |> Repo.insert()
+    |> maybe_update_instead()
+  end
+
+  defp maybe_update_instead({:ok, _} = res), do: res
+
+  defp maybe_update_instead({:error, %{errors: errors, changes: changes}} = res) do
+    case Keyword.get(errors, :board_id) do
+      {_, [constraint: :unique, constraint_name: "boxes_owner_id_board_id_index"]} ->
+        changes
+        |> update_from_attributes()
+
+      _ ->
+        res
+    end
+  end
+
+  defp update_from_attributes(%{owner_id: owner_id, board_id: board_id} = attrs) do
+    from(b in Box, where: b.owner_id == ^owner_id and b.board_id == ^board_id)
+    |> Repo.one!()
+    |> Box.changeset(attrs)
+    |> Repo.update()
   end
 
   @doc """

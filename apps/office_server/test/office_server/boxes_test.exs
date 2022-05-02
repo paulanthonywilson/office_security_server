@@ -35,6 +35,14 @@ defmodule OfficeServer.BoxesTest do
       assert {_, [{:validation, :required}]} = Keyword.get(errors, :board_id)
       assert {_, [{:validation, :required}]} = Keyword.get(errors, :name)
     end
+
+    test "registering the same board id with the same user just updates", %{user_id: user_id} do
+      assert {:ok, _token} = Boxes.register(@email, @password, "000000002c7a379a", "379a")
+      assert {:ok, _token} = Boxes.register(@email, @password, "000000002c7a379a", "fred")
+
+      assert [%Box{owner_id: ^user_id, name: "fred", board_id: "000000002c7a379a"}] =
+               Boxes.boxes_owned_by(user_id)
+    end
   end
 
   describe "users boxes" do

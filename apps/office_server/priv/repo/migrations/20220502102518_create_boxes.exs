@@ -10,6 +10,6 @@ defmodule OfficeServer.Repo.Migrations.CreateBoxes do
       timestamps()
     end
 
-    create index(:boxes, [:owner_id])
+    create index(:boxes, [:owner_id, :board_id], unique: true)
   end
 end
